@@ -6,7 +6,7 @@ const { GoogleGenAI } = require("@google/genai");
 const app = express();
 app.use(express.json());
 
-// Only share these two files (keeps .env safe)
+// Only share these files (keeps .env safe)
 app.get("/", (req, res) => res.sendFile(path.join(__dirname, "index.html")));
 app.get("/index.html", (req, res) => res.sendFile(path.join(__dirname, "index.html")));
 app.get("/style.css", (req, res) => res.sendFile(path.join(__dirname, "style.css")));
@@ -17,7 +17,7 @@ const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 const FAST = "gemini-3.1-flash-lite-preview";
 const STRONG = "gemini-3.5-flash";
 
-const SYSTEM_PROMPT = `You are infamous AI, a friendly and clear assistant.
+const SYSTEM_PROMPT = `You are Inferno AI, a friendly and clear assistant.
 Reply like ChatGPT or Claude: direct, short, easy to read.
 RULES:
 - Give the answer first or very early. No long intros.
@@ -84,5 +84,5 @@ async function handleChat(req, res) {
 
 app.post(["/chat", "/api/chat", "/ask", "/api/ask", "/generate"], handleChat);
 
-const PORT = 3000;
-app.listen(PORT, () => console.log(`infamous AI running at http://localhost:${PORT}`));
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Inferno AI running at http://localhost:${PORT}`));
