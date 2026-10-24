@@ -1,0 +1,82 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --panel: rgba(255, 255, 255, 0.04);
+  --border: rgba(255, 255, 255, 0.12);
+  --muted: #8a8a8a;
+}
+
+body {
+  font-family: "Segoe UI", system-ui, sans-serif;
+  color: #f2f2f2;
+  height: 100vh;
+  background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(255,255,255,0.07), transparent 70%), #000;
+}
+
+.app { display: flex; height: 100vh; }
+
+.sidebar { width: 260px; padding: 24px 18px; background: #050505; border-right: 1px solid var(--border); }
+.logo { font-size: 26px; font-weight: 700; margin-bottom: 26px; color: #fff; }
+.logo span { color: var(--muted); font-weight: 400; }
+
+.new-chat, .input-bar button, .welcome button {
+  color: #000; font-size: 15px; font-weight: 600; background: #fff;
+  border: none; border-radius: 12px; cursor: pointer;
+  transition: transform .15s, box-shadow .15s;
+}
+.new-chat { width: 100%; padding: 12px; }
+.new-chat:hover, .welcome button:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(255,255,255,.25); }
+.side-note { margin-top: 22px; font-size: 13px; color: var(--muted); }
+
+.chat { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+.messages { flex: 1; overflow-y: auto; padding: 28px 8%; }
+.messages::-webkit-scrollbar { width: 8px; }
+.messages::-webkit-scrollbar-thumb { background: #333; border-radius: 8px; }
+
+.msg { max-width: 78%; padding: 14px 18px; margin-bottom: 16px; border-radius: 18px; line-height: 1.65; overflow-wrap: anywhere; animation: rise .3s ease; }
+@keyframes rise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.msg.user { margin-left: auto; white-space: pre-wrap; border-bottom-right-radius: 6px; background: #fff; color: #000; }
+.msg.bot { border-bottom-left-radius: 6px; background: var(--panel); border: 1px solid var(--border); }
+
+.msg p { margin-bottom: 10px; }
+.msg p:last-child { margin-bottom: 0; }
+.msg ul, .msg ol { margin: 8px 0 8px 22px; }
+.msg li { margin-bottom: 5px; }
+.msg h1, .msg h2, .msg h3 { margin: 14px 0 6px; font-size: 17px; color: #fff; }
+.msg code { background: rgba(255,255,255,.1); padding: 2px 7px; border-radius: 6px; font-family: Consolas, monospace; font-size: 14px; }
+.msg pre { background: #0a0a0a; border: 1px solid var(--border); padding: 14px; border-radius: 12px; overflow-x: auto; margin: 10px 0; }
+.msg pre code { background: none; padding: 0; }
+
+.loading { padding: 0 8% 12px; color: var(--muted); font-size: 14px; animation: pulse 1.2s infinite; }
+@keyframes pulse { 50% { opacity: .4; } }
+.error { margin: 0 8% 12px; padding: 12px 16px; color: #ddd; background: var(--panel); border: 1px solid #555; border-radius: 12px; }
+.hidden { display: none; }
+
+.input-bar { display: flex; gap: 10px; align-items: center; margin: 0 8% 24px; padding: 8px; background: #0a0a0a; border: 1px solid var(--border); border-radius: 18px; }
+.input-bar:focus-within { border-color: #fff; }
+.input-bar input { flex: 1; padding: 12px 14px; font-size: 16px; color: #fff; background: transparent; border: none; outline: none; }
+.input-bar input::placeholder { color: var(--muted); }
+.input-bar button { padding: 12px 26px; }
+.input-bar button:disabled { opacity: .5; cursor: not-allowed; }
+
+.welcome { position: fixed; inset: 0; z-index: 10; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 24px; background: radial-gradient(ellipse 60% 45% at 50% 30%, rgba(255,255,255,.1), transparent 70%), #000; transition: opacity .5s, visibility .5s; }
+.welcome.leave { opacity: 0; visibility: hidden; }
+.welcome-icon { width: 88px; height: 88px; display: grid; place-items: center; margin-bottom: 26px; border-radius: 26px; background: #fff; box-shadow: 0 0 70px rgba(255,255,255,.25); animation: float 3s ease-in-out infinite; }
+.welcome-icon svg { width: 46px; height: 46px; fill: #000; }
+@keyframes float { 50% { transform: translateY(-8px); } }
+.welcome h2 { font-size: 34px; margin-bottom: 10px; }
+.welcome p { color: var(--muted); font-size: 17px; max-width: 420px; margin-bottom: 30px; }
+.welcome button { padding: 14px 34px; font-size: 16px; border-radius: 14px; }
+
+@media (max-width: 700px) {
+  .app { flex-direction: column; }
+  .sidebar { width: 100%; padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; border-right: none; border-bottom: 1px solid var(--border); }
+  .logo { margin: 0; font-size: 21px; }
+  .new-chat { width: auto; padding: 9px 14px; }
+  .side-note { display: none; }
+  .messages { padding: 18px 14px; }
+  .msg { max-width: 92%; }
+  .loading { padding-left: 14px; }
+  .error { margin: 0 14px 12px; }
+  .input-bar { margin: 0 12px 14px; }
+}
